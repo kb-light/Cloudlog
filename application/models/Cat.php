@@ -43,7 +43,7 @@
 			} else if (isset($result['downlink_freq'])) {
 				$data['downlink_freq'] = $result['downlink_freq'];
 			} else {
-				$data['downlink_freq'] = 0;
+				$data['downlink_freq'] = NULL;
 			}
 			if (isset($result['mode_rx'])) {
 				$data['downlink_mode'] = $result['mode_rx'];
