@@ -4,11 +4,7 @@
 
 		function update($result, $user_id) {
 
-			if ($result['timestamp'] != "") {
-				$timestamp = gmdate("Y-m-d H:i:s");
-			} else {
-				$timestamp = gmdate("Y-m-d H:i:s");
-			}
+			$timestamp = gmdate("Y-m-d H:i:s");
 
 			if (isset($result['prop_mode'])) {
 				$prop_mode = $result['prop_mode'];
