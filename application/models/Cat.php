@@ -24,10 +24,8 @@
 			// Let's keep uplink_freq, downlink_freq, uplink_mode and downlink_mode for backward compatibility
 			$data = array(
 				'prop_mode' => $prop_mode,
-				'downlink_freq' => $result['frequency_rx'] ?? $result['downlink_freq'],
-				'downlink_mode' => $result['mode_rx'] ?? $result['downlink_mode'],
-				'power' => $result['power'],
-				'sat_name' => $result['sat_name'],
+				'power' => $result['power'] ?? 0,
+				'sat_name' => $result['sat_name'] ?? NULL,
 				'timestamp' => $timestamp,
 			);
 			if (isset($result['frequency']) && $result['frequency'] != "NULL") {
@@ -39,6 +37,20 @@
 				$data['mode'] = $result['mode'];
 			} else {
 				$data['mode'] = $result['uplink_mode'];
+			}
+			if (isset($result['frequency_rx'])) {
+				$data['downlink_freq'] = $result['frequency_rx'];
+			} else if (isset($result['downlink_freq'])) {
+				$data['downlink_freq'] = $result['downlink_freq'];
+			} else {
+				$data['downlink_freq'] = 0;
+			}
+			if (isset($result['mode_rx'])) {
+				$data['downlink_mode'] = $result['mode_rx'];
+			} else if (isset($result['downlink_freq'])) {
+				$data['downlink_mode'] = $result['downlink_mode'];
+			} else {
+				$data['downlink_mode'] = NULL;
 			}
 
 			if ($query->num_rows() > 0)
