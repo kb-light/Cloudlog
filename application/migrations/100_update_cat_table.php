@@ -11,8 +11,12 @@ class Migration_update_cat_table extends CI_Migration {
     public function up()
     {
         if ($this->db->table_exists('cat')) {
-            $this->dbforge->drop_column('cat', 'uplink_freq');
-            $this->dbforge->drop_column('cat', 'uplink_mode');
+            if ($this->db->field_exists('uplink_freq', 'cat')) {
+                $this->dbforge->drop_column('cat', 'uplink_freq');
+            }
+            if ($this->db->field_exists('uplink_mode', 'cat')) {
+                $this->dbforge->drop_column('cat', 'uplink_mode');
+            }
             $this->db->query("ALTER TABLE cat RENAME COLUMN downlink_mode TO mode_rx");
             $this->db->query("ALTER TABLE cat RENAME COLUMN downlink_freq TO frequency_rx");
         }
@@ -27,6 +31,11 @@ class Migration_update_cat_table extends CI_Migration {
             if (!$this->db->field_exists('uplink_freq', 'cat')) {
                 $fields = array(
                     'uplink_freq bigint(13) DEFAULT NULL AFTER `downlink_freq`',
+                );
+                $this->dbforge->add_column('cat', $fields);
+            }
+            if (!$this->db->field_exists('uplink_mode', 'cat')) {
+                $fields = array(
                     'uplink_mode varchar(255) DEFAULT NULL AFTER `downlink_mode`',
                 );
                 $this->dbforge->add_column('cat', $fields);
